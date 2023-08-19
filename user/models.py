@@ -30,7 +30,7 @@ class AppUser(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
     email= models.EmailField(max_length=50,unique=True)
     name=models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=20)
     coins = models.IntegerField(default=100)
     moves = models.JSONField(default=list)
     contacts = models.JSONField(default=list)
