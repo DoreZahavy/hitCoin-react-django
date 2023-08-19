@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ek1^kygzzb=s(cdxqr-1v6dspwg^k31kov9u4*=_i$j341-&6k'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(cdxqr-1v6dspwg^k31kov9u4*=_i$j341-&6k')
+
+# SECRET_KEY = 'django-insecure-ek1^kygzzb=s(cdxqr-1v6dspwg^k31kov9u4*=_i$j341-&6k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -81,8 +90,14 @@ WSGI_APPLICATION = 'hitcoin.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hitcoin_db',
+        'USER': 'postgres ',
+        'PASSWORD': 'doreZ123',
+        'HOST': 'localhost',  
+        'PORT': '5432', 
     }
 }
 
@@ -121,7 +136,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public', 'static')]
 
 
 # Default primary key field type
@@ -149,6 +165,6 @@ CORS_ALLOWED_ORIGINS = [
 SESSION_COOKIE_HTTPONLY = True
 
 # when using https switch to true for security
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
