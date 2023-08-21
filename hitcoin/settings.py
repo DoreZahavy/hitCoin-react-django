@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
-import dj_database_url
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,9 +32,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'user',
     'user_auth',
+    'move',
+    'contact',
     'corsheaders',
 ]
 
@@ -93,13 +95,15 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hitcoin_db',
-        'USER': 'postgres ',
-        'PASSWORD': 'doreZ123',
-        'HOST': 'localhost',  
+        'NAME': 'hitcoin',
+        'USER': 'hitcoin_user ',
+        'PASSWORD': 'z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL',
+        'HOST': 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
         'PORT': '5432', 
     }
 }
+DATABASES["default"] = dj_database_url.parse('postgres://hitcoin_user:z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL@dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com/hitcoin')
+
 
 
 # Password validation
@@ -137,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public', 'static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public', 'static')]
 
 
 # Default primary key field type
@@ -165,6 +169,6 @@ CORS_ALLOWED_ORIGINS = [
 SESSION_COOKIE_HTTPONLY = True
 
 # when using https switch to true for security
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'

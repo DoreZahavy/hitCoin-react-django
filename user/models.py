@@ -32,8 +32,9 @@ class AppUser(AbstractBaseUser,PermissionsMixin):
     name=models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     coins = models.IntegerField(default=100)
-    moves = models.JSONField(default=list)
-    contacts = models.JSONField(default=list)
+    # moves = models.ManyToManyField("self", through='Move', symmetrical=False, related_name='moves_related')
+    contacts = models.ManyToManyField("self", through='Contact', symmetrical=False, related_name='contacts_related')
+
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -45,3 +46,22 @@ class AppUser(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+class Contact(models.Model):
+    from_user = models.ForeignKey(AppUser, related_name='from_contacts', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(AppUser, related_name='to_contacts', on_delete=models.CASCADE)
+    
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')
+
+class Move(models.Model):
+    id = models.AutoField(primary_key=True)
+    from_user = models.ForeignKey(AppUser, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(AppUser, related_name='to_user', on_delete=models.CASCADE)
+    coins = models.IntegerField(default=100)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')

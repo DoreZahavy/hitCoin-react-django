@@ -7,6 +7,8 @@ from .models import AppUser
 from .serializers import AppUserSerializer
 
 class UserListView(generics.ListAPIView):
+    # queryset = Contact.objects.all()
+    # serializer_class = ContactSerializer
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     # authentication_classes = [SessionAuthentication]
