@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 # DEBUG = True
 DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
 #     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -71,7 +71,9 @@ ROOT_URLCONF = 'hitcoin.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR , 'public')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,7 +105,8 @@ DATABASES = {
         'PORT': '5432', 
     }
 }
-DATABASES["default"] = dj_database_url.parse('postgres://hitcoin_user:z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL@dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com/hitcoin')
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 # external host 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
 
 
@@ -142,7 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public', 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public/static')]
 
 
 # Default primary key field type
@@ -170,6 +173,6 @@ CORS_ALLOWED_ORIGINS = [
 SESSION_COOKIE_HTTPONLY = True
 
 # when using https switch to true for security
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
