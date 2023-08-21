@@ -29,9 +29,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = 'RENDER' not in os.environ
+DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
 #     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'hitcoin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+database_password = os.environ.get("DATABASE_PASSWORD")
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -97,13 +98,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hitcoin',
         'USER': 'hitcoin_user ',
-        'PASSWORD': 'z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL',
-        'HOST': 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
+        'PASSWORD': 'database_password',
+        'HOST':'dpg-cjh85ek1ja0c73bb1v00-a',
         'PORT': '5432', 
     }
 }
 DATABASES["default"] = dj_database_url.parse('postgres://hitcoin_user:z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL@dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com/hitcoin')
-
+# external host 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
 
 
 # Password validation

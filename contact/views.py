@@ -3,7 +3,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from user.models import AppUser
+from user.models import AppUser,Move
+from django.db.models import Q
+from user.serializers import MoveSerializer
+
 
 class AddContactView(APIView):
     def post(self, request, user_id, contact_id):
@@ -61,9 +64,10 @@ class UserContactDetailView(APIView):
             user = AppUser.objects.get(pk=user_id)
         except AppUser.DoesNotExist:
             return Response({'error': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
-
         try:
             contact = user.contacts.get(pk=contact_id)
-            return Response({"id":contact.id,"name":contact.name,"phone":contact.phone,"email":contact.email})
+            contact_moves = Move.objects.filter(Q(from_user_id=contact_id) | Q(to_user_id=contact_id))
+            serializer = MoveSerializer(contact_moves, many=True) 
+            return Response({"id":contact.id,"name":contact.name,"phone":contact.phone,"email":contact.email,"moves":serializer.data})
         except AppUser.DoesNotExist:
             return Response({'error': 'Contact does not exist for this user.'}, status=status.HTTP_404_NOT_FOUND)
