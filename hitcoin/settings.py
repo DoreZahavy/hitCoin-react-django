@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 # DEBUG = True
 DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
 #     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -105,7 +105,7 @@ DATABASES = {
         'PORT': '5432', 
     }
 }
-database_url = os.environ.get("DATABASE_URL")
+database_url = os.environ.get("DATABASE_URL", 'postgres://hitcoin_user:z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL@dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com/hitcoin')
 DATABASES["default"] = dj_database_url.parse(database_url)
 # external host 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
 
@@ -144,6 +144,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public/static')]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
