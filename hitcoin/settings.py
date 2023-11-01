@@ -28,10 +28,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 # SECRET_KEY = 'django-insecure-ek1^kygzzb=s(cdxqr-1v6dspwg^k31kov9u4*=_i$j341-&6k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
+DEBUG = True
+# DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
 #     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
