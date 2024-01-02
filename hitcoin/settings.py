@@ -54,12 +54,12 @@ INSTALLED_APPS = [
     'move',
     'contact',
     'corsheaders',
-    # 'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -178,24 +178,28 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.AppUser"
 
-REST_FRAMEWORK = {
+# REST_FRAMEWORK = {
    
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-    ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.SessionAuthentication',
+#     ],
 
-}
+# }
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
 "http://localhost:5173",
-"http://127.0.0.1:5173"
+"http://127.0.0.1:5173",
+"https://127.0.0.1:5173",
+"https://localhost:5173"
 ]
+# CORS_ALLOWED_ORIGINS = ["*"]
 
-
-SESSION_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_HTTPONLY = True
 
 # when using https switch to true for security
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SAMESITE = 'None'
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
+CSRF_COOKIE_NAME = 'csrftoken'
+# CSRF_USE_SESSIONS = True

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from django.views.decorators.csrf import csrf_exempt
+from django.middleware.csrf import get_token
 from django.contrib.auth import login, logout
 from django.contrib.sessions.models import Session
 from rest_framework import generics, permissions, status
@@ -14,7 +15,7 @@ from django.contrib.auth.views import LogoutView
 class UserSignupView(generics.CreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
         # Hash the password before saving
@@ -27,7 +28,7 @@ class UserSignupView(generics.CreateAPIView):
 class UserLoginView(generics.CreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
         email = request.data.get('email')
@@ -38,12 +39,14 @@ class UserLoginView(generics.CreateAPIView):
         if user and user.check_password(password):
             login(request, user)
             serializer = self.get_serializer(user)
+           
             return Response(serializer.data)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserLogoutView(LogoutView):
+    @csrf_exempt
     def logout(self, request, *args, **kwargs):
         print(request)  # Print the request.META dictionary
         return super().logout(request, *args, **kwargs)
