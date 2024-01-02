@@ -13,7 +13,15 @@ class ContactSerializer(serializers.ModelSerializer):
         model = Contact
         fields = '__all__'
 
+# class MoveSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Move
+#         fields = '__all__'
+
 class MoveSerializer(serializers.ModelSerializer):
+    to_user_name = serializers.ReadOnlyField(source='to_user.name')
+    from_user_name = serializers.ReadOnlyField(source='from_user.name')
+
     class Meta:
         model = Move
-        fields = '__all__'
+        fields = ['id', 'from_user', 'from_user_name', 'to_user', 'to_user_name', 'coins', 'created']

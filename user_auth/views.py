@@ -32,6 +32,7 @@ class UserLoginView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         email = request.data.get('email')
         password = request.data.get('password')
+        print('wassup')
         user = AppUser.objects.filter(email=email).first()
         print(user)
         if user and user.check_password(password):

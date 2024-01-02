@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-ek1^kygzzb=s(
 # DEBUG = True
 # DEBUG = os.environ.get("DEBUG" , "false").lower() == "True"
 DEBUG = os.environ.get("DEBUG" , True)
-
+# DEBUG = True
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 # if RENDER_EXTERNAL_HOSTNAME:
@@ -54,11 +54,12 @@ INSTALLED_APPS = [
     'move',
     'contact',
     'corsheaders',
+    # 'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -99,6 +100,15 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
+
+
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'hitcoin',
+        # 'USER': 'hitcoin_user ',
+        # 'PASSWORD': 'database_password',
+        # 'HOST':'dpg-cjh85ek1ja0c73bb1v00-a',
+        # 'PORT': '5432', 
+
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hitcoin',
         'USER': 'hitcoin_user ',
@@ -107,6 +117,10 @@ DATABASES = {
         'PORT': '5432', 
     }
 }
+# database_url = os.environ.get("DATABASE_URL", 'postgresql://postgres:F11*g-2e6GFGgB66GFA3g1a6aB-b-*31@monorail.proxy.rlwy.net:42485/railway')
+# DATABASES = {
+#     "default": dj_database_url.config(default='postgresql://postgres:F11*g-2e6GFGgB66GFA3g1a6aB-b-*31@monorail.proxy.rlwy.net:42485/railway', conn_max_age=1800),
+# }
 database_url = os.environ.get("DATABASE_URL", 'postgres://hitcoin_user:z4dgeFH78ESP28p64SyXRZJ1oKQwRxpL@dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com/hitcoin')
 DATABASES["default"] = dj_database_url.parse(database_url)
 # external host 'dpg-cjh85ek1ja0c73bb1v00-a.frankfurt-postgres.render.com',  
@@ -149,7 +163,10 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'public/static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifesrStaticFilesStorage'
 
@@ -179,6 +196,6 @@ CORS_ALLOWED_ORIGINS = [
 SESSION_COOKIE_HTTPONLY = True
 
 # when using https switch to true for security
-SESSION_COOKIE_SECURE = True
-
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = 'None'
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
