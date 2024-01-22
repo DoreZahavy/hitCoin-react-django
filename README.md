@@ -1,6 +1,7 @@
 # hitCoin: Money Management and Bitcoin Market Analysis
 ## Overview
-Hitcoin is a comprehensive money management system designed to streamline financial transactions, track expenses, and provide insightful statistics about the Bitcoin market. The project combines the power of PostgreSQL for efficient data organization, Django Rest Framework for API endpoints, React for a dynamic user interface, Chart.js for data visualization, and Redux for state management.
+Hitcoin is a comprehensive money management system designed to streamline financial transactions, track expenses, and provide insightful statistics about the Bitcoin market. The project combines the power of PostgreSQL for efficient data organization, Django Rest Framework for API endpoints, React for a dynamic user interface, Chart.js for data visualization, and Redux for state management. 
+https://hitcoin.onrender.com/
 
 ## Features
 
